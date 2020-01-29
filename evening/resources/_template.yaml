@@ -1,0 +1,17 @@
+# The endpoint URL.
+# If omitted the resource key of the DOMAIN dict will be used to build the URL.
+# As an example, contacts would make the people resource available at /contacts (instead of /people).
+# URL can be as complex as needed and can be nested relative to another API endpoint (you can have a /contacts endpoint and then a /contacts/overseas endpoint.
+# Both are independent of each other and freely configurable).
+url: book
+
+
+# List of fields on which filtering is allowed.
+# Entries in this list work in a hierarchical way.
+# This means that, for instance, filtering on 'dict.sub_dict.foo' is allowed if allowed_filters contains any of 'dict.sub_dict.foo, 'dict.sub_dict' or 'dict'. Instead filtering on 'dict' is allowed if allowed_filters contains 'dict'.
+# Can be set to [] (no filters allowed), or ['*'] (fields allowed on every field).
+# Defaults to ['*'].
+# Please note: If API scraping or DB DoS attacks are a concern, then globally disabling filters (see ALLOWED_FILTERS above) and then whitelisting valid ones at the local level is the way to go.
+
+allowed_filters:
+  - *

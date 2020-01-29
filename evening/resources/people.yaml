@@ -1,0 +1,34 @@
+resource_methods:
+  - GET
+  - POST
+  - DELETE
+
+item_methods:
+  - GET
+  - PATCH
+  - DELETE
+
+additional_lookup:
+  url: regex("[\w]+")
+  field: username
+
+schema:
+  firstName:
+    type: string
+
+  lastName:
+    type: string
+
+  username:
+    required: true
+    type: string
+    unique: true
+
+  accountId:
+    type: string
+    editable: false
+
+datasource:
+  projection:
+    username: false
+    accountId: false
