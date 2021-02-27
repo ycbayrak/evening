@@ -12,9 +12,9 @@ eve-swagger = "*"
 pyyaml = "*"
 gunicorn = "*"
 pytest = "*"
-flask-script = "*"
 requests = "*"
+flask-script = "*"
 flask-swagger-ui = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "^3.4"
