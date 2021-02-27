@@ -1,5 +1,7 @@
-from flask import jsonify, render_template
+from flask import jsonify
 from datetime import datetime
+
+from . import __version__
 
 
 def ping():
@@ -12,4 +14,8 @@ def health_check():
 
 
 def landing():
-    return render_template("landing.html")
+    return jsonify(
+        name="Evening API",
+        version=__version__,
+        description="Evening is an Eve boilerplate project for rapid api deployment via `.yaml` file configurations.",
+    )

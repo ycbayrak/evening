@@ -5,7 +5,7 @@ from flask_swagger_ui import get_swaggerui_blueprint
 from . import __version__
 from . import hooks
 
-from .config import config_map, TEMPLATE_DIR
+from .config import config_map
 from .views import ping, health_check, landing
 
 SWAGGER_URL = "/docs"  # URL for exposing Swagger UI (without trailing '/')
@@ -22,7 +22,7 @@ swaggerui_blueprint = get_swaggerui_blueprint(
 def create_app(config="development", api_version=__version__):
     config_path = config_map[config]
 
-    app = Eve(settings=config_path, template_folder=TEMPLATE_DIR)
+    app = Eve(settings=config_path)
     app.config["VERSION"] = api_version
 
     app.config["SWAGGER_INFO"] = {
