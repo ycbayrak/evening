@@ -1,5 +1,3 @@
-import os
-
 from eve import Eve
 from eve_swagger import swagger
 from flask_swagger_ui import get_swaggerui_blueprint
@@ -10,7 +8,6 @@ from . import hooks
 from .config import config_map, TEMPLATE_DIR
 from .views import ping, health_check, landing
 
-
 SWAGGER_URL = "/docs"  # URL for exposing Swagger UI (without trailing '/')
 API_URL = "/api-docs"  # Our API url (can of course be a local resource)
 
@@ -18,25 +15,21 @@ API_URL = "/api-docs"  # Our API url (can of course be a local resource)
 swaggerui_blueprint = get_swaggerui_blueprint(
     SWAGGER_URL,  # Swagger UI static files will be mapped to '{SWAGGER_URL}/dist/'
     API_URL,
-    config={"app_name": "Evening API Swagger"},  # Swagger UI config overrides
-    # oauth_config={  # OAuth config. See https://github.com/swagger-api/swagger-ui#oauth2-configuration .
-    #    'clientId': "your-client-id",
-    #    'clientSecret': "your-client-secret-if-required",
-    #    'realm': "your-realms",
-    #    'appName': "your-app-name",
-    #    'scopeSeparator': " ",
-    #    'additionalQueryStringParams': {'test': "hello"}
-    # }
+    config={"app_name": "Evening API Swagger", "version": __version__},
 )
 
 
-def create_app(config="development", api_version="2019.1"):
+def create_app(config="development", api_version=__version__):
     config_path = config_map[config]
 
     app = Eve(settings=config_path, template_folder=TEMPLATE_DIR)
     app.config["VERSION"] = api_version
 
-    # Swagger Extension
+    app.config["SWAGGER_INFO"] = {
+        "title": "Evening API",
+        "version": __version__,
+        "description": "Evening is a Eve boilerplate project for rapid api deployment via yaml file configurations.",
+    }
     app.register_blueprint(swagger)
 
     app.add_url_rule("/", "landing", landing)
@@ -49,4 +42,3 @@ def create_app(config="development", api_version="2019.1"):
     app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
     return app
-

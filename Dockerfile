@@ -18,12 +18,10 @@ COPY . .
 ENV FLASK_ENV=production
 ENV URL_PREFIX=api
 
+RUN pytest .
+
 EXPOSE 8000
 
 HEALTHCHECK CMD python manage.py health_check
 
-# Test application before deploy
-RUN pytest . 
-
-# Application entrypoint
 CMD [ "gunicorn", "-b", "0.0.0.0:8000", "evening.wsgi:app" ]

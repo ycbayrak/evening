@@ -1,29 +1,103 @@
 # Evening
 
-Evening is a Eve boilerplate project for rapid api deployment via `.yaml` file configurations.
-
-Good evening!
+Evening is an Eve boilerplate project for rapid api deployment via `.yaml` file configurations.
 
 ## Getting Started
 
-- `pipenv install`
+Install required python packages;
 
-- `python manage.py runserver`
+```shell
+pipenv install
+```
+
+Activate your Pipenv;
+
+```
+pipenv shell
+```
+
+Run development server;
+
+```
+python manage.py runserver
+```
 
 ## Guide
 
 ### How to create resource?
 
-Create a file in `evening/resources` folder, and name it like `<resource-name>.yaml`, then your resource is ready. You can check available parameters on `/docs/resource-config.rst`
+First, create new `.yaml` called `book.yaml` in `resources/` directory;
+
+```shell
+touch resources/book.yaml
+```
+
+Then edit file with the content below;
+
+```yaml
+url: book
+sorting: true
+resource_methods:
+  - GET
+  - POST
+  - DELETE
+item_methods:
+  - GET
+  - PATCH
+  - DELETE
+schema:
+  name:
+    type: string
+  categoryId:
+    type: objectid
+    required: true
+  type:
+    type: string
+    allowed:
+      - bestseller
+      - low-price
+      - high-price
+  age:
+    type: number
+    max: 10
+```
+
+All set, now run development server with;
+
+```shell
+python manage.py runserver
+```
+
+Navigate to the Swagger UI;
+
+```
+http://127.0.0.1:5000/docs
+```
+
+You will see your book endpoints accordingly. You can check all configurations on `/docs/resource-config.rst` file.
 
 ## Deployment
 
 ### Docker
 
-`docker build -t evening-api .`
+Build image with;
 
-`docker run -p 8000:8000 evening-api:latest`
+```shell
+docker build -t evening-api .
+```
 
-Or, with `docker-compose`
+Run container with port binding;
 
-`docker-compose up`
+```shell
+docker run -p 8000:8000 evening-api
+```
+
+### Docker Compose
+
+Evening preconfigured with MongoDB instance specified in `docker-compose.yml` file.
+
+Simply run;
+
+```shell
+docker-compose up
+```

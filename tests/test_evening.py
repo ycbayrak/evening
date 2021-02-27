@@ -14,7 +14,7 @@ def client(app):
 
 
 def test_version():
-    assert __version__ == "0.0.1-alpha.0"
+    assert __version__ == "0.1"
 
 
 def test_index_view(client):

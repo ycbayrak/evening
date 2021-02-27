@@ -4,10 +4,8 @@ import requests
 from flask_script import Manager
 from evening import create_app
 
-
 os.environ.setdefault("FLASK_ENV", "development")
 os.environ.setdefault("FLASK_PORT", "5000")
-
 
 config = os.environ.get("FLASK_ENV")
 port = int(os.environ.get("FLASK_PORT"))
@@ -36,4 +34,3 @@ def health_check():
 
 if __name__ == "__main__":
     manager.run()
-

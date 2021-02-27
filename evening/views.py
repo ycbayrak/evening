@@ -1,4 +1,4 @@
-from flask import jsonify, current_app, render_template
+from flask import jsonify, render_template
 from datetime import datetime
 
 
@@ -9,6 +9,7 @@ def ping():
 def health_check():
     now = datetime.now()
     return jsonify(alive=True, last_checked=now.utcnow())
+
 
 def landing():
     return render_template("landing.html")
