@@ -1,5 +1,7 @@
 # Evening
 
+![build-status](https://api.travis-ci.com/ycbayrak/evening.svg)
+
 Evening is an Eve boilerplate project for rapid api deployment via `.yaml` file configurations.
 
 ## Getting Started
