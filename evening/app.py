@@ -13,7 +13,7 @@ API_URL = "/api-docs"  # Our API url (can of course be a local resource)
 
 # Call factory function to create our blueprint
 swaggerui_blueprint = get_swaggerui_blueprint(
-    SWAGGER_URL,  # Swagger UI static files will be mapped to '{SWAGGER_URL}/dist/'
+    SWAGGER_URL,
     API_URL,
     config={"app_name": "Evening API Swagger", "version": __version__},
 )
@@ -30,15 +30,14 @@ def create_app(config="development", api_version=__version__):
         "version": __version__,
         "description": "Evening is a Eve boilerplate project for rapid api deployment via yaml file configurations.",
     }
-    app.register_blueprint(swagger)
+    app.register_blueprint(swagger.get_swagger_blueprint())
+    app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
     app.add_url_rule("/", "landing", landing)
     app.add_url_rule("/ping", "ping", ping)
     app.add_url_rule("/health-check", "health-check", health_check)
 
-    app.before_first_request_funcs.append(hooks.before_request_handler)
-    # app.after_request += hooks.after_request_handler
-
-    app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
+    app.before_request(hooks.before_request_handler)
+    app.after_request(hooks.after_request_handler)
 
     return app
